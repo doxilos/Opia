@@ -4,6 +4,7 @@ import {Avatar, Button, Paper, Grid, Typography, Container} from "@mui/material"
 import {LockOutlined} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom"
+import {signin, signup} from "../../actions/auth"
 
 import useStyles from "./styles"
 import Input from "./Input";
@@ -34,6 +35,13 @@ export const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if(isSignUp){
+            dispatch(signup(formData, navigate))
+        }
+        else {
+            dispatch(signin(formData, navigate))
+        }
     }
 
     const handleChange = (e) => {
@@ -51,6 +59,7 @@ export const Auth = () => {
 
     const googleSuccess = async (tokenResponse) => {
         const token = tokenResponse.access_token
+        console.log(tokenResponse)
         const userGet = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
             {headers: {Authorization: `Bearer ${tokenResponse.access_token}`}}
         )
@@ -80,15 +89,17 @@ export const Auth = () => {
                                     <Input
                                         name="firstName"
                                         label="First Name"
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         autoFocus
                                         half
+                                        type="text"
                                     />
                                     <Input
                                         name="lastName"
                                         label="Last Name"
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         half
+                                        type="text"
                                     />
 
                                 </>
