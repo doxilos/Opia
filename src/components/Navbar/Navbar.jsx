@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate, useLocation} from "react-router-dom";
 import {Link} from "react-router-dom";
-import {AppBar, Avatar, Button, Toolbar, Typography} from "@mui/material";
+import {AppBar, Avatar, Button, Fade, Toolbar, Typography} from "@mui/material";
 import {decode} from "jsonwebtoken";
 
 import useStyles from "./styles"
@@ -39,6 +39,9 @@ export const Navbar = () => {
 
 
     return (
+
+        <Fade in timeout={500}>
+
         <AppBar className={classes.appBar} position="static" color="inherit">
             <div className={classes.brandContainer}>
                 <Typography component={Link} to="/" variant="h2" align="center" className={`${classes.heading}`}>
@@ -65,5 +68,6 @@ export const Navbar = () => {
             </Toolbar>
 
         </AppBar>
+        </Fade>
     )
 }

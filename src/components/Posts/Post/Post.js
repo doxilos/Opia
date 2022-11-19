@@ -20,20 +20,23 @@ const Post = ({post, setCurrentId}) => {
 
     const Likes = () => {
         if (post.likes.length > 0) {
-            return post.likes.find((like) => like ===  (user ? user.result._id : ""))
+            return post.likes.find((like) => like === (user ? user.result._id : ""))
                 ? (
                     <><ThumbUpAlt
                         fontSize="small"/>&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
                     </>
-                ):(
-                    <><ThumbUpAltOutlined fontSize="small"/>&nbsp;{post.likes.length} {post.likes.length === 1 ? "Like": "Likes"}</>
+                ) : (
+                    <><ThumbUpAltOutlined
+                        fontSize="small"/>&nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}</>
                 )
         }
         return <><ThumbUpAltOutlined fontSize="small"/>&nbsp;Like</>
     }
 
     return (
-        <Card className={classes.card}>
+
+
+        <Card className={classes.card} raised elevation={6}>
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
             <div className={classes.overlay}>
                 <Typography variant="h6">{post.name}</Typography>
@@ -56,10 +59,10 @@ const Post = ({post, setCurrentId}) => {
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <Button disabled={!user} variant="outlined" size="small" onClick={() => dispatch(likePost(post._id))}>
-                   <Likes/>
+                    <Likes/>
                 </Button>
 
-                {user && (user.result._id === post.creator) &&(
+                {user && (user.result._id === post.creator) && (
 
                     <Button variant="outlined" size="small" onClick={() => dispatch(deletePost(post._id))}>
                         <Delete color="secondary" fontSize="small"/>

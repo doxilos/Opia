@@ -13,6 +13,12 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
+        boxShadow: "1px 1px 21px rgba(0, 0, 0, 0.5)",
+        // transition: "all ease 0.2s",
+        // "&:hover": {
+        //     boxShadow: "1px 1px 21px rgba(255, 255, 255, 0.2)"
+        // }
+
     },
     heading: {
         color: "white",
@@ -20,7 +26,11 @@ export default makeStyles((theme) => ({
         fontSize: '2em',
         fontWeight: 300,
         cursor: "pointer",
-        textShadow: "1px 1px 21px rgba(0, 0, 0, 1)"
+        textShadow: "1px 1px 21px rgba(0, 0, 0, 1)",
+        transition: "all ease 0.2s",
+        "&:hover": {
+            textShadow: "1px 1px 21px rgba(255, 255, 255, 1)"
+        }
     },
     image: {
         marginLeft: '10px',

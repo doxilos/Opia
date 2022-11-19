@@ -27,11 +27,14 @@ export const Home = () => {
     const [search, setSearch] = useState("")
     const [tags, setTags] = useState([]);
 
-    const searchPost=()=>{
-        if(search.trim()){
+    const searchPost = () => {
+        if (search.trim().length > 0 || tags.length > 0) {
+
             dispatch(getPostsBySearch({search, tags: tags.join(",")}))
-        }else{
-            navigate("/")
+            navigate(`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`)
+        } else {
+            console.log("Navigate")
+            navigate("/posts")
         }
     }
 
@@ -49,8 +52,13 @@ export const Home = () => {
         dispatch(getPosts())
     }, [dispatch, currentId]);
 
+    useEffect(() => {
+        dispatch(getPosts())
+    }, []);
+
+
     return (
-        <Grow in>
+        <Grow in out>
             <Container maxWidth="xl">
                 <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch"
                       spacing={3}>
@@ -75,7 +83,8 @@ export const Home = () => {
                                 variant="outlined"
                             />
 
-                            <Button variant="contained" onClick={searchPost} className={classes.searchButton} color="primary">Search</Button>
+                            <Button variant="contained" onClick={searchPost} className={classes.searchButton}
+                                    color="primary">Search</Button>
 
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId}/>
@@ -84,6 +93,7 @@ export const Home = () => {
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={6} md={9}>
+
                         <Posts setCurrentId={setCurrentId}/>
                     </Grid>
                 </Grid>

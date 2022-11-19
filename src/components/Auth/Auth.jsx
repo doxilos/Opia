@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useGoogleLogin} from '@react-oauth/google';
-import {Avatar, Button, Paper, Grid, Typography, Container} from "@mui/material";
+import {Avatar, Button, Paper, Grid, Typography, Container, Grow} from "@mui/material";
 import {LockOutlined} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom"
@@ -75,6 +75,9 @@ export const Auth = () => {
     }
 
     return (
+
+        <Grow in out>
+
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
@@ -158,5 +161,8 @@ export const Auth = () => {
                 </form>
             </Paper>
         </Container>
+
+        </Grow>
+
     )
 }
