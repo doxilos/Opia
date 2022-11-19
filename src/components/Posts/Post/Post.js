@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {Card, CardActions, CardContent, CardMedia, Button, Typography} from "@mui/material"
 import {ThumbUpAlt, Delete, MoreHoriz, ThumbUpAltOutlined} from "@mui/icons-material";
 import moment from "moment";
@@ -11,7 +11,12 @@ const Post = ({post, setCurrentId}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const user = JSON.parse(localStorage.getItem("profile"))
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
+    useEffect(() => {
+       setUser(JSON.parse(localStorage.getItem("profile")))
+    }, [user]);
+
 
     const Likes = () => {
         if (post.likes.length > 0) {

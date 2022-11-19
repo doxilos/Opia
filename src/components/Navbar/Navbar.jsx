@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {useNavigate, useLocation} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {AppBar, Avatar, Button, Toolbar, Typography} from "@mui/material";
+import {decode} from "jsonwebtoken";
 
 import useStyles from "./styles"
 
@@ -16,14 +17,23 @@ export const Navbar = () => {
 
     const logout = () => {
         dispatch({type: "LOGOUT"})
-        navigate("/")
         setUser(null)
+        navigate("/")
     }
 
     useEffect(() => {
+        let token
         if (user) {
-            const token = user.token
+            token = user.token
         }
+
+        if(token) {
+            const decodedToken = decode(token)
+            if(decodedToken.exp * 1000 < new Date().getTime()){
+                logout()
+            }
+        }
+
         setUser(JSON.parse(localStorage.getItem("profile")))
     }, [location]);
 

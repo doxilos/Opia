@@ -15,13 +15,18 @@ const Form = ({currentId, setCurrentId}) => {
         selectedFile: ""
     })
 
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
     const post = useSelector((state) =>
         currentId ? state.posts.find((p) => p._id === currentId) : null)
 
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const user = JSON.parse(localStorage.getItem("profile"))
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem("profile")))
+    }, [user]);
+
 
     useEffect(() => {
         if (post) setPostData(post)
