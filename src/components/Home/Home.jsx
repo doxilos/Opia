@@ -58,7 +58,7 @@ export const Home = () => {
 
 
     return (
-        <Grow in out>
+        <Grow in out="true">
             <Container maxWidth="xl">
                 <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch"
                       spacing={3}>
@@ -89,7 +89,7 @@ export const Home = () => {
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId}/>
                         <Paper elevation={6}>
-                            <Paginate/>
+                            <Paginate page={page}/>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={6} md={9}>
