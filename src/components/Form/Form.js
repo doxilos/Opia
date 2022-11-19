@@ -31,10 +31,10 @@ const Form = ({currentId, setCurrentId}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (currentId === 0) {
-            dispatch(createPost({...postData, name: user.result.name}))
-        } else {
+        if (currentId) {
             dispatch(updatePost(currentId, {...postData, name: user.result.name}))
+        } else {
+            dispatch(createPost({...postData, name: user.result.name}))
         }
 
         clear()
@@ -50,7 +50,7 @@ const Form = ({currentId, setCurrentId}) => {
         })
     }
 
-    if(!user) {
+    if (!user) {
         return (
             <Paper className={classes.paper}>
                 <Typography variant="h6" align="center">
