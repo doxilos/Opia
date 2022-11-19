@@ -27,13 +27,17 @@ export const Auth = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const googleLogin = useGoogleLogin({onSuccess: res => googleSuccess(res), onError: errResponse => console.log(errResponse)})
+    const googleLogin = useGoogleLogin({
+        onSuccess: res => googleSuccess(res),
+        onError: errResponse => console.log(errResponse)
+    })
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault()
     }
 
-    const handleChange = () => {
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
 
     const handleShowPassword = () => {
@@ -47,17 +51,16 @@ export const Auth = () => {
 
     const googleSuccess = async (tokenResponse) => {
         const token = tokenResponse.access_token
-        const userGet= await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+        const userGet = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
             {headers: {Authorization: `Bearer ${tokenResponse.access_token}`}}
-            )
+        )
 
         const result = userGet.data
 
-        try{
+        try {
             dispatch({type: "AUTH", data: {result, token}})
             navigate("/")
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error)
         }
     }
