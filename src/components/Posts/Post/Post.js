@@ -13,10 +13,10 @@ const Post = ({post, setCurrentId}) => {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-    useEffect(() => {
-       setUser(JSON.parse(localStorage.getItem("profile")))
-    }, [user]);
-
+    // useEffect(() => {
+    //    setUser(JSON.parse(localStorage.getItem("profile")))
+    // }, [user]);
+    //
 
     const Likes = () => {
         if (post.likes.length > 0) {
