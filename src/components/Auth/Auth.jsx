@@ -137,16 +137,16 @@ export const Auth = () => {
                     {/*    console.log("Login Failed.")*/}
                     {/*}}/>*/}
 
-                    <Button
-                        className={classes.googleButton}
-                        color="primary"
-                        fullWidth
-                        onClick={() => googleLogin()}
-                        startIcon={<Icon/>}
-                        variant="contained"
-                    >
-                        Sign In With Google
-                    </Button>
+                    {/*<Button*/}
+                    {/*    className={classes.googleButton}*/}
+                    {/*    color="primary"*/}
+                    {/*    fullWidth*/}
+                    {/*    onClick={() => googleLogin()}*/}
+                    {/*    startIcon={<Icon/>}*/}
+                    {/*    variant="contained"*/}
+                    {/*>*/}
+                    {/*    Sign In With Google*/}
+                    {/*</Button>*/}
 
                     <Grid container justifyContent="flex-end">
                         <Grid item>
