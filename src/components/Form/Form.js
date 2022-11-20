@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 
 import useStyles from "./styles"
 import {createPost, updatePost} from "../../actions/posts";
+import {useNavigate} from "react-router-dom";
 
 
 const Form = ({currentId, setCurrentId}) => {
@@ -18,10 +19,11 @@ const Form = ({currentId, setCurrentId}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
     const post = useSelector((state) =>
-        currentId ? state.posts.find((p) => p._id === currentId) : null)
+        currentId ? state.posts.posts.find((p) => p._id === currentId) : null)
 
     const classes = useStyles()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     //
     // useEffect(() => {
     //     setUser(JSON.parse(localStorage.getItem("profile")))
@@ -39,7 +41,7 @@ const Form = ({currentId, setCurrentId}) => {
         if (currentId) {
             dispatch(updatePost(currentId, {...postData, name: user.result.name}))
         } else {
-            dispatch(createPost({...postData, name: user.result.name}))
+            dispatch(createPost({...postData, name: user.result.name}, navigate))
         }
 
         clear()
@@ -66,7 +68,7 @@ const Form = ({currentId, setCurrentId}) => {
     }
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{`${currentId ? "Editing" : "Create"}`} a Post</Typography>
                 <TextField
