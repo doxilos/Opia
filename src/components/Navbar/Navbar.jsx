@@ -95,6 +95,14 @@ export const Navbar = () => {
                             Sign In
                         </Button>
                     )}
+                    <Button
+                        sx={{ marginLeft: "12px" }}
+                        component={Link}
+                        to="/donate"
+                        color="primary"
+                    >
+                        Donate!
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Fade>
