@@ -226,7 +226,7 @@ const PostDetails = () => {
                 ) : (
                     <Grow in out="true">
                         <Paper elevation={6} className={classes.loadingPaper}>
-                            <CircularProgress />
+                            <Typography>No recommended Posts</Typography>
                         </Paper>
                     </Grow>
                 )}
