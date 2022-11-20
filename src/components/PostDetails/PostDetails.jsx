@@ -2,13 +2,11 @@ import React, {useEffect} from "react";
 import {
     Paper,
     Typography,
-    CircularProgress,
     Divider,
     Card,
     CardMedia,
     CardContent,
-    Button,
-    CardActions, Grid, Grow
+    Grid, Grow, Button, CardActions, CardActionArea, CircularProgress
 } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment"
@@ -18,6 +16,7 @@ import {deletePost, getPost, getPostsBySearch, likePost} from "../../actions/pos
 import useStyles from "./styles"
 import CommentSection from "./CommentSection";
 import {Delete, MoreHoriz} from "@mui/icons-material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 
 const PostDetails = () => {
 
@@ -27,7 +26,10 @@ const PostDetails = () => {
     const classes = useStyles()
     const {id} = useParams()
 
-    const openPost = (_id) => navigate(`/posts/${_id}`)
+    const openPost = (_id) => {
+        // navigate(`/posts/${_id}`)
+        navigate(`/posts/${_id}`)
+    }
 
     useEffect(() => {
         dispatch(getPost(id))
@@ -43,23 +45,32 @@ const PostDetails = () => {
     if (!post) return null
 
     if (isLoading) {
-        return <Paper elevation={6} className={classes.loadingPaper}>
-            <CircularProgress size="7em"/>
-        </Paper>
+        return (
+            <Grow in out="true">
+                <Paper elevation={6} className={classes.loadingPaper}>
+                    <CircularProgress/>
+                </Paper>
+            </Grow>
+        )
     }
 
     const recommendedPosts = posts.filter(({_id}) => _id !== post._id)
 
     return (
 
-        <Grow in out="true" timeout={600}>
+        <Grow in timeout={600}>
+
+            <Paper>
+                
+            </Paper>
+
             <Paper style={{padding: '20px', borderRadius: '15px'}} elevation={6}>
                 <div className={classes.card}>
                     <div className={classes.section}>
                         <Typography variant="h3" component="h2">{post.title}</Typography>
                         <Typography gutterBottom variant="h6" color="textSecondary"
-                                    component="h2">{post.tags.map((tag) => (
-                            <Link to={`/tags/${tag}`} style={{textDecoration: 'none', color: '#3f51b5'}}>
+                                    component="h2">{post.tags.map((tag, index) => (
+                            <Link key={index} to={`/tags/${tag}`} style={{textDecoration: 'none', color: '#3f51b5'}}>
                                 {` #${tag} `}
                             </Link>
                         ))}
@@ -75,57 +86,65 @@ const PostDetails = () => {
                         <Divider style={{margin: '20px 0'}}/>
                         <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
                         <Divider style={{margin: '20px 0'}}/>
-                        <CommentSection post={post} />
+                        <CommentSection post={post}/>
                         <Divider style={{margin: '20px 0'}}/>
                     </div>
-                    <div className={classes.imageSection}>
-                        <img className={classes.media}
-                             src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
-                             alt={post.title}/>
-                    </div>
+                        <img style={{width: "100%"}} src={post.selectedFile} alt={post.name}/>
                 </div>
 
                 {
-                    recommendedPosts.length && (
-
+                    recommendedPosts.length > 0 ? (
                         <Grow in out="true" timeout={500}>
                             <div className={classes.section}>
                                 <Typography gutterBottom variant="h5">You might also like:</Typography>
                                 <Divider/>
-                                <div className={classes.recommendedPosts}>
+                                <Grid container spacing={3} sx={{paddingTop: "25px"}}>
 
-                                    <Grid container alignItems="stretch" spacing={3} sx={{paddingTop: "25px"}}>
+                                    {
+                                        recommendedPosts.map(({
+                                                                  title,
+                                                                  message,
+                                                                  name,
+                                                                  likes,
+                                                                  selectedFile,
+                                                                  _id
+                                                              }) => (
 
-                                        {
-                                            recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
-
-
-                                                <div style={{margin: "20px", cursor: "pointer"}}
-                                                     onClick={() => openPost(_id)}
-                                                     key={_id}>
-
-                                                    <Card className={classes.card2} raised elevation={6}>
-                                                        <CardMedia className={classes.media2} image={selectedFile}
-                                                                   title={title}/>
-                                                        <div className={classes.overlay}>
-                                                            <Typography variant="h6">{name}</Typography>
-                                                        </div>
-
-                                                        <Typography className={classes.title} variant="h5"
-                                                                    gutterBottom>{title}</Typography>
-                                                        <CardContent>
-                                                            <Typography color="textSecondary" variant="body2"
-                                                                        component="p">{message}</Typography>
-                                                        </CardContent>
+                                            <Grid className={classes.hover} key={_id} item xs={12} sm={12} md={6} lg={3}>
+                                                <Grow in timeout={600}>
+                                                    <Card sx={{maxWidth: 345}}>
+                                                        <CardActionArea onClick={() => openPost(_id)}>
+                                                            <CardMedia
+                                                                component="img"
+                                                                height="140"
+                                                                image={selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
+                                                                alt={name}
+                                                            />
+                                                            <CardContent>
+                                                                <Typography gutterBottom variant="h5" component="div">
+                                                                    {title}
+                                                                </Typography>
+                                                                <Typography variant="body2" color="text.secondary">
+                                                                    {message}
+                                                                </Typography>
+                                                                <Typography gutterBottom variant="h6" component="div">
+                                                                    Likes: {likes.length}
+                                                                </Typography>
+                                                            </CardContent>
+                                                        </CardActionArea>
                                                     </Card>
-
-                                                    {/*<img src={selectedFile} width="200px"/>*/}
-                                                </div>
-                                            ))
-                                        }
-                                    </Grid>
-                                </div>
+                                                </Grow>
+                                            </Grid>
+                                        ))
+                                    }
+                                </Grid>
                             </div>
+                        </Grow>
+                    ) : (
+                        <Grow in out="true">
+                            <Paper elevation={6} className={classes.loadingPaper}>
+                                <CircularProgress/>
+                            </Paper>
                         </Grow>
                     )
                 }

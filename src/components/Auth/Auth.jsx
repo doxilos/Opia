@@ -8,7 +8,6 @@ import {signin, signup} from "../../actions/auth"
 
 import useStyles from "./styles"
 import Input from "./Input";
-import Icon from "./icon"
 import axios from "axios";
 
 const initialState = {
@@ -28,10 +27,10 @@ export const Auth = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const googleLogin = useGoogleLogin({
-        onSuccess: res => googleSuccess(res),
-        onError: errResponse => console.log(errResponse)
-    })
+    // const googleLogin = useGoogleLogin({
+    //     onSuccess: res => googleSuccess(res),
+    //     onError: errResponse => console.log(errResponse)
+    // })
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -57,22 +56,22 @@ export const Auth = () => {
         setShowPassword(false)
     }
 
-    const googleSuccess = async (tokenResponse) => {
-        const token = tokenResponse.access_token
-        console.log(tokenResponse)
-        const userGet = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
-            {headers: {Authorization: `Bearer ${tokenResponse.access_token}`}}
-        )
-
-        const result = userGet.data
-
-        try {
-            dispatch({type: "AUTH", data: {result, token}})
-            navigate("/")
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const googleSuccess = async (tokenResponse) => {
+    //     const token = tokenResponse.access_token
+    //     console.log(tokenResponse)
+    //     const userGet = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+    //         {headers: {Authorization: `Bearer ${tokenResponse.access_token}`}}
+    //     )
+    //
+    //     const result = userGet.data
+    //
+    //     try {
+    //         dispatch({type: "AUTH", data: {result, token}})
+    //         navigate("/")
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
 

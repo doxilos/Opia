@@ -4,7 +4,8 @@ export default makeStyles((theme) => ({
         borderRadius: '20px',
         objectFit: 'cover',
         width: '100%',
-        maxHeight: '600px',
+        maxHeight: '400px',
+        minHeight: "100px",
 
     },
     overlay: {
@@ -29,6 +30,18 @@ export default makeStyles((theme) => ({
             flexWrap: 'wrap',
             flexDirection: 'column',
         },
+        [theme.breakpoints.down('xs')]: {
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+        },
+        [theme.breakpoints.down('md')]: {
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+        },
+        [theme.breakpoints.down('lg')]: {
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+        },
     },
     card2: {
         display: 'flex',
@@ -46,13 +59,21 @@ export default makeStyles((theme) => ({
         padding: '0 16px',
     },
 
+    hover: {
+        transition: "all ease 0.2s",
+        "&:hover": {
+            transform: "scale(1.02, 1.02)"
+        }
+    },
+
     section: {
         borderRadius: '20px',
         margin: '10px',
         flex: 1,
     },
     imageSection: {
-        marginLeft: '20px',
+        // marginLeft: '20px',
+        minWidth: "50px",
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
         },
@@ -74,10 +95,12 @@ export default makeStyles((theme) => ({
     commentsOuterContainer: {
         display: 'flex',
         justifyContent: 'space-between',
+        width: "100%"
     },
     commentsInnerContainer: {
         height: '200px',
         overflowY: 'auto',
         marginRight: '30px',
+        width: "500px"
     },
 }));

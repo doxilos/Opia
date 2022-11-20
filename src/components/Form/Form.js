@@ -16,7 +16,7 @@ const Form = ({currentId, setCurrentId}) => {
         selectedFile: ""
     })
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+    const user = JSON.parse(localStorage.getItem("profile"))
 
     const post = useSelector((state) =>
         currentId ? state.posts.posts.find((p) => p._id === currentId) : null)

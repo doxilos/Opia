@@ -10,14 +10,14 @@ import useStyles from "./styles"
 
 export const Navbar = () => {
     const classes = useStyles()
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
 
+    const user = JSON.parse(localStorage.getItem("profile"))
+
     const logout = () => {
         dispatch({type: "LOGOUT"})
-        setUser(null)
         navigate("/")
     }
 
@@ -33,8 +33,6 @@ export const Navbar = () => {
                 logout()
             }
         }
-
-        setUser(JSON.parse(localStorage.getItem("profile")))
     }, [location]);
 
 

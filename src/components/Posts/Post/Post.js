@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase} from "@mui/material"
 import {ThumbUpAlt, Delete, MoreHoriz, ThumbUpAltOutlined} from "@mui/icons-material";
 import moment from "moment";
@@ -13,8 +13,7 @@ const Post = ({post, setCurrentId}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
+    const user = JSON.parse(localStorage.getItem("profile"))
     // useEffect(() => {
     //    setUser(JSON.parse(localStorage.getItem("profile")))
     // }, [user]);
