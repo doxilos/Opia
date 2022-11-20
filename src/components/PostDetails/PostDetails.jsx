@@ -8,25 +8,17 @@ import {
     CardContent,
     Grid,
     Grow,
-    Button,
-    CardActions,
     CardActionArea,
     CircularProgress,
-    Box,
+    Fade,
 } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import moment from "moment"
 import { useParams, useNavigate, Link } from "react-router-dom"
 
-import {
-    deletePost,
-    getPost,
-    getPostsBySearch,
-    likePost,
-} from "../../actions/posts"
+import { getPost, getPostsBySearch } from "../../actions/posts"
 import useStyles from "./styles"
 import CommentSection from "./CommentSection"
-import { Delete, MoreHoriz } from "@mui/icons-material"
 import Grid2 from "@mui/material/Unstable_Grid2"
 
 const PostDetails = () => {
@@ -75,7 +67,11 @@ const PostDetails = () => {
             >
                 <Grid2 container spacing={2}>
                     <Grid2 xs={12} sm={12} md={6} xl={6}>
-                        <Typography variant="h3" component="h2">
+                        <Typography
+                            sx={{ textShadow: "0px 0px 11px rgba(0, 0, 0, 1)" }}
+                            variant="h3"
+                            component="h2"
+                        >
                             {post.title}
                         </Typography>
                         <Typography
@@ -124,11 +120,21 @@ const PostDetails = () => {
                         <Divider style={{ margin: "20px 0" }} />
                     </Grid2>
                     <Grid2 xs={12} sm={12} md={6} xl={6}>
-                        <img
-                            style={{ width: "100%" }}
-                            src={post.selectedFile}
-                            alt={post.name}
-                        />
+                        <Fade in timeout={600}>
+                            <img
+                                style={{
+                                    width: "100%",
+                                    borderRadius: "20px",
+                                    boxShadow:
+                                        "4px 4px 21px 0px rgba(0,0,0,0.67)",
+                                }}
+                                src={
+                                    post.selectedFile ||
+                                    "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                                }
+                                alt={post.name}
+                            />
+                        </Fade>
                     </Grid2>
                 </Grid2>
 
@@ -163,7 +169,14 @@ const PostDetails = () => {
                                             lg={3}
                                         >
                                             <Grow in timeout={600}>
-                                                <Card sx={{ maxWidth: 345 }}>
+                                                <Card
+                                                    sx={{
+                                                        maxWidth: 345,
+                                                        borderRadius: "20px",
+                                                        boxShadow:
+                                                            "4px 4px 21px 0px rgba(0,0,0,0.67)",
+                                                    }}
+                                                >
                                                     <CardActionArea
                                                         onClick={() =>
                                                             openPost(_id)

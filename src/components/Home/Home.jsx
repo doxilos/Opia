@@ -1,13 +1,21 @@
-import Form from "../Form/Form";
-import Posts from "../Posts/Posts";
-import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {getPosts, getPostsBySearch} from "../../actions/posts";
-import {Container, Grid, Grow, Paper, AppBar, TextField, Button} from "@mui/material";
-import {useNavigate, useLocation} from "react-router-dom";
-import ChipInput from "@sarakusha/material-ui-chip-input";
+import Form from "../Form/Form"
+import Posts from "../Posts/Posts"
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { getPosts, getPostsBySearch } from "../../actions/posts"
+import {
+    Container,
+    Grid,
+    Grow,
+    Paper,
+    AppBar,
+    TextField,
+    Button,
+} from "@mui/material"
+import { useNavigate, useLocation } from "react-router-dom"
+import ChipInput from "@sarakusha/material-ui-chip-input"
 
-import Paginate from "../Pagination";
+import Paginate from "../Pagination"
 import useStyles from "./styles"
 
 function useQuery() {
@@ -21,17 +29,21 @@ export const Home = () => {
     const classes = useStyles()
 
     const page = query.get("page") || 1
+    // eslint-disable-next-line
     const searchQuery = query.get("searchQuery")
 
     const [currentId, setCurrentId] = useState(null)
     const [search, setSearch] = useState("")
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([])
 
     const searchPost = () => {
         if (search.trim().length > 0 || tags.length > 0) {
-
-            dispatch(getPostsBySearch({search, tags: tags.join(",")}))
-            navigate(`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`)
+            dispatch(getPostsBySearch({ search, tags: tags.join(",") }))
+            navigate(
+                `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(
+                    ","
+                )}`
+            )
         } else {
             console.log("Navigate")
             navigate("/posts")
@@ -46,24 +58,33 @@ export const Home = () => {
 
     const handleAdd = (tag) => setTags([...tags, tag])
 
-    const handleDelete = (tagToDelete) => setTags(tags.filter((tag) => tag !== tagToDelete))
+    const handleDelete = (tagToDelete) =>
+        setTags(tags.filter((tag) => tag !== tagToDelete))
 
     useEffect(() => {
         dispatch(getPosts())
-    }, [dispatch, currentId]);
+    }, [dispatch, currentId])
 
     useEffect(() => {
         dispatch(getPosts())
-    }, []);
-
+    }, [])
 
     return (
-        <Grow in out="true">
+        <Grow in>
             <Container maxWidth="xl">
-                <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch"
-                      spacing={3}>
+                <Grid
+                    className={classes.gridContainer}
+                    container
+                    justifyContent="space-between"
+                    alignItems="stretch"
+                    spacing={3}
+                >
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppBar className={classes.appBarSearch} position="static" color="inherit">
+                        <AppBar
+                            className={classes.appBarSearch}
+                            position="static"
+                            color="inherit"
+                        >
                             <TextField
                                 name="search"
                                 variant="outlined"
@@ -75,7 +96,7 @@ export const Home = () => {
                             />
 
                             <ChipInput
-                                style={{margin: "10px 0"}}
+                                style={{ margin: "10px 0" }}
                                 value={tags}
                                 onAdd={handleAdd}
                                 onDelete={handleDelete}
@@ -83,18 +104,25 @@ export const Home = () => {
                                 variant="outlined"
                             />
 
-                            <Button variant="contained" onClick={searchPost} className={classes.searchButton}
-                                    color="primary">Search</Button>
-
+                            <Button
+                                variant="contained"
+                                onClick={searchPost}
+                                className={classes.searchButton}
+                                color="primary"
+                            >
+                                Search
+                            </Button>
                         </AppBar>
-                        <Form currentId={currentId} setCurrentId={setCurrentId}/>
+                        <Form
+                            currentId={currentId}
+                            setCurrentId={setCurrentId}
+                        />
                         <Paper elevation={6} className={classes.pagination}>
-                            <Paginate page={page}/>
+                            <Paginate page={page} />
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={6} md={9}>
-
-                        <Posts setCurrentId={setCurrentId}/>
+                        <Posts setCurrentId={setCurrentId} />
                     </Grid>
                 </Grid>
             </Container>
